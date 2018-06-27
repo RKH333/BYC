@@ -89,7 +89,7 @@ def DeployMessage(resultado):
     print("Usted tiene "+ str(resultado[0])+ " toros y " + str(resultado[1]) +" vacas")
 
 def DeployWinnerMessage(respuesta):
-    print("Usted ha ganado la respuesta es: " + str(respuesta))
+    print("Usted ha ganado, la respuesta es: " + str(respuesta))
     
 
 def BYC():
