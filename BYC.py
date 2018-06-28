@@ -9,18 +9,28 @@ def Reglas():
     print("Toro: Si una cifra está presente y se encuentra en el lugar correcto")
     print("Vaca: Si una cifra está presente pero se encuentra en un lugar equivocado")
     print("Al adivinarse el número se termina la partida")
-    print("Los números a utilizar son del 0-9\n")
-    print("El número a adivinar no puede empezar con el número 0")
+    print("Los números a utilizar son del 0-9")
+    print("El número a adivinar no puede empezar con el número 0\n")
     return
+
+def DeployMessage(resultado):
+    print("Usted tiene "+ str(resultado[0])+ " toros y " + str(resultado[1]) +" vacas")
+
+def DeployWinnerMessage(respuesta):
+    print("Usted ha ganado, la respuesta es: " + str(respuesta))
 
 #Verifica que los numeros generados no estén repetidos
 #Recibe una lista
 #Devuelve un True si hay repetidos, y False si no hay repetidos
 def Repetidos(lista):
     #Se verifica con el largo de la lista
-    return(len(lista) != len(set(lista))) 
+    return(len(lista) != len(set(lista)))
 
-    
+def IngresarDatos():
+    numero= input("Ingrese el numero: ")
+    lista= [int(i) for i in str(numero)]
+    return (lista)
+
 # Generador de numeros aleatorios para cierta dificultad
     # Falta verificar que no se repitan numeros
     # Son retornados como una lista de numeros separados ejm: [3,2,4,1]
@@ -60,7 +70,7 @@ def Evaluacion(numero,var,respuesta):
                 vacas+= 1
         return(toros, vacas)
     else:
-        print("Mensaje de Error en funcion Evaluacion: Listas diferente tamaño")
+        print("Mensaje de Error en función Evaluación: Listas de diferente tamaño")
 
 def Nivel_1():
     print("Juego Fácil 3 dígitos")
@@ -69,35 +79,61 @@ def Nivel_1():
     respuesta= Generador(1)
     print(respuesta)
     while (var==False):
+        global numero
         numero= IngresarDatos()
+        while(len(numero) != 3 or Repetidos(numero)):
+            print("El numero no es de 3 digitos o hay numeros repetidos\nIntente de nuevo")
+            numero= IngresarDatos()
         resultado= Evaluacion(numero,var,respuesta)
         DeployMessage(resultado)
-        if(resultado[0]==3):
+        if(resultado[0]==3): # Verifica que estén los toros
             var= True
     else:
         DeployWinnerMessage(respuesta)
 
+def Nivel_2():
+    print("Juego Medio 4 dígitos")
+    contador=0
+    var= False
+    respuesta= Generador(2)
+    print(respuesta)
+    while (var==False):
+        global numero
+        numero= IngresarDatos()
+        while(len(numero) != 4 or Repetidos(numero)):
+            print("El numero no es de 4 digitos o hay numeros repetidos\nIntente de nuevo")
+            numero= IngresarDatos()
+        resultado= Evaluacion(numero,var,respuesta)
+        DeployMessage(resultado)
+        if(resultado[0]==4): 
+            var= True
+    else:
+        DeployWinnerMessage(respuesta)
 
-
-def IngresarDatos():
-    numero= input("Ingrese el numero: ")
-    lista= [int(i) for i in str(numero)]
-    return (lista)
-    
-    
-def DeployMessage(resultado):
-    print("Usted tiene "+ str(resultado[0])+ " toros y " + str(resultado[1]) +" vacas")
-
-def DeployWinnerMessage(respuesta):
-    print("Usted ha ganado, la respuesta es: " + str(respuesta))
-    
+def Nivel_3():
+    print("Juego Difícil 5 dígitos")
+    var= False
+    respuesta= Generador(3)
+    print(respuesta)
+    while (var==False):
+        global numero
+        numero= IngresarDatos()
+        while(len(numero) != 5 or Repetidos(numero)):
+            print("El numero no es de 5 digitos o hay numeros repetidos\nIntente de nuevo")
+            numero= IngresarDatos()
+        resultado= Evaluacion(numero,var,respuesta)
+        DeployMessage(resultado)
+        if(resultado[0]==5):
+            var= True
+    else:
+        DeployWinnerMessage(respuesta)
 
 def BYC():
     print("*** Bulls & Cows ***")
     print("1. Jugar \n2. Reglas \n3. Salir")
     opcion= int(input("Seleccione una opción: "))
     if (opcion == 1):
-        nivel= input("Ingrese la dificultad: ")
+        nivel= int(input("Ingrese la dificultad: "))
         if (nivel == 1):
             Nivel_1()
         elif (nivel == 2):
@@ -111,3 +147,6 @@ def BYC():
         BYC()
     elif (opcion == 3):
         print("Bye Bye")
+    else:
+        print("\nSeleccione un número válido\n")
+        BYC()
